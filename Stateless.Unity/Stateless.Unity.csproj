@@ -1,0 +1,110 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{28599161-B73D-440A-B4E1-C560F16CAD3E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Stateless.Unity</RootNamespace>
+    <AssemblyName>Stateless.Unity</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\Stateless\DynamicTriggerBehaviour.cs">
+      <Link>DynamicTriggerBehaviour.cs</Link>
+    </Compile>
+    <Compile Include="..\Stateless\Enforce.cs">
+      <Link>Enforce.cs</Link>
+    </Compile>
+    <Compile Include="..\Stateless\IgnoredTriggerBehaviour.cs">
+      <Link>IgnoredTriggerBehaviour.cs</Link>
+    </Compile>
+    <Compile Include="..\Stateless\ParameterConversion.cs">
+      <Link>ParameterConversion.cs</Link>
+    </Compile>
+    <Compile Include="..\Stateless\ParameterConversionResources.Designer.cs">
+      <Link>ParameterConversionResources.Designer.cs</Link>
+    </Compile>
+    <Compile Include="..\Stateless\StateConfiguration.cs">
+      <Link>StateConfiguration.cs</Link>
+    </Compile>
+    <Compile Include="..\Stateless\StateConfigurationResources.Designer.cs">
+      <Link>StateConfigurationResources.Designer.cs</Link>
+    </Compile>
+    <Compile Include="..\Stateless\StateMachine.cs">
+      <Link>StateMachine.cs</Link>
+    </Compile>
+    <Compile Include="..\Stateless\StateMachineResources.Designer.cs">
+      <Link>StateMachineResources.Designer.cs</Link>
+    </Compile>
+    <Compile Include="..\Stateless\StateReference.cs">
+      <Link>StateReference.cs</Link>
+    </Compile>
+    <Compile Include="..\Stateless\StateRepresentation.cs">
+      <Link>StateRepresentation.cs</Link>
+    </Compile>
+    <Compile Include="..\Stateless\StateRepresentationResources.Designer.cs">
+      <Link>StateRepresentationResources.Designer.cs</Link>
+    </Compile>
+    <Compile Include="..\Stateless\Transition.cs">
+      <Link>Transition.cs</Link>
+    </Compile>
+    <Compile Include="..\Stateless\TransitioningTriggerBehaviour.cs">
+      <Link>TransitioningTriggerBehaviour.cs</Link>
+    </Compile>
+    <Compile Include="..\Stateless\TriggerBehaviour.cs">
+      <Link>TriggerBehaviour.cs</Link>
+    </Compile>
+    <Compile Include="..\Stateless\TriggerWithParameters.cs">
+      <Link>TriggerWithParameters.cs</Link>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="..\Stateless\ParameterConversionResources.resx">
+      <Link>ParameterConversionResources.resx</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\Stateless\StateConfigurationResources.resx">
+      <Link>StateConfigurationResources.resx</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\Stateless\StateMachineResources.resx">
+      <Link>StateMachineResources.resx</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\Stateless\StateRepresentationResources.resx">
+      <Link>StateRepresentationResources.resx</Link>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
