@@ -13,13 +13,13 @@ namespace Stateless
 
             if (args.Length <= index)
                 throw new ArgumentException(
-                    string.Format(ParameterConversionResources.ArgOfTypeRequiredInPosition, argType, index));
+					string.Format("An argument of type {0} is required in position {1}.", argType, index));
 
             var arg = args[index];
 
             if (arg != null && !argType.IsAssignableFrom(arg.GetType()))
                 throw new ArgumentException(
-                    string.Format(ParameterConversionResources.WrongArgType, index, arg.GetType(), argType));
+					string.Format("The argument in position {0} is of type {1} but must be of type {2}.", index, arg.GetType(), argType));
 
             return arg;
         }
@@ -33,7 +33,7 @@ namespace Stateless
         {
             if (args.Length > expected.Length)
                 throw new ArgumentException(
-                    string.Format(ParameterConversionResources.TooManyParameters, expected.Length, args.Length));
+					string.Format("Too many parameters have been supplied. Expecting {0} but got {1}.", expected.Length, args.Length));
 
             for (int i = 0; i < expected.Length; ++i)
                 Unpack(args, expected[i], i);

@@ -455,7 +455,7 @@ namespace Stateless
             {
                 if (destination.Equals(_representation.UnderlyingState))
                 {
-                    throw new ArgumentException(StateConfigurationResources.SelfTransitionsEitherIgnoredOrReentrant);
+                    throw new ArgumentException("Permit() (and PermitIf()) require that the destination state is not equal to the source state. To accept a trigger without changing state, use either Ignore() or PermitReentry().");
                 }
             }
 

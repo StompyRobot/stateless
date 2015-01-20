@@ -12,7 +12,7 @@ namespace Stateless
             readonly TState _state;
 
             readonly IDictionary<TTrigger, ICollection<TriggerBehaviour>> _triggerBehaviours =
-                new Dictionary<TTrigger, ICollection<TriggerBehaviour>>();
+                new Dictionary<TTrigger, ICollection<TriggerBehaviour>>(TriggerComparer);
 
             readonly ICollection<Action<Transition, object[]>> _entryActions = new List<Action<Transition, object[]>>();
             readonly ICollection<Action<Transition>> _exitActions = new List<Action<Transition>>();
@@ -51,7 +51,7 @@ namespace Stateless
 
                 if (actual.Count() > 1)
                     throw new InvalidOperationException(
-                        string.Format(StateRepresentationResources.MultipleTransitionsPermitted,
+						string.Format("Multiple permitted exit transitions are configured from state '{1}' for trigger '{0}'. Guard clauses must be mutually exclusive.",
                         trigger, _state));
 
                 handler = actual.FirstOrDefault();
@@ -170,8 +170,7 @@ namespace Stateless
 
             public bool IsIncludedIn(TState state)
             {
-                return
-                    _state.Equals(state) ||
+                return StateComparer.Equals(_state, state)||
                     (_superstate != null && _superstate.IsIncludedIn(state));
             }
 
