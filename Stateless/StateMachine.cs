@@ -12,28 +12,30 @@ namespace Stateless
     public partial class StateMachine<TState, TTrigger>
     {
 
-	    private readonly IDictionary<TState, StateRepresentation> _stateConfiguration =
-		    new Dictionary<TState, StateRepresentation>(StateComparer);
+        private readonly IDictionary<TState, StateRepresentation> _stateConfiguration =
+            new Dictionary<TState, StateRepresentation>(StateComparer);
 
-	    private readonly IDictionary<TTrigger, TriggerWithParameters> _triggerConfiguration =
-		    new Dictionary<TTrigger, TriggerWithParameters>(TriggerComparer);
+        private readonly IDictionary<TTrigger, TriggerWithParameters> _triggerConfiguration =
+            new Dictionary<TTrigger, TriggerWithParameters>(TriggerComparer);
 
         readonly Func<TState> _stateAccessor;
         readonly Action<TState> _stateMutator;
+
         Action<TState, TTrigger> _unhandledTriggerAction = DefaultUnhandledTriggerAction;
-        event Action<Transition> _onTransitioned;
 
-	    public static IEqualityComparer<TState> StateComparer = EqualityComparer<TState>.Default; 
-	    public static IEqualityComparer<TTrigger> TriggerComparer = EqualityComparer<TTrigger>.Default; 
+        private List<Action<Transition>> _onTransitioned; 
 
-	    /// <summary>
-	    /// Construct a state machine with external state storage.
-	    /// </summary>
-	    /// <param name="stateAccessor">A function that will be called to read the current state value.</param>
-	    /// <param name="stateMutator">An action that will be called to write new state values.</param>
-	    /// <param name="stateComparer"></param>
-	    /// <param name="triggerComparer"></param>
-	    public StateMachine(Func<TState> stateAccessor, Action<TState> stateMutator)
+        public static IEqualityComparer<TState> StateComparer = EqualityComparer<TState>.Default; 
+        public static IEqualityComparer<TTrigger> TriggerComparer = EqualityComparer<TTrigger>.Default; 
+
+        /// <summary>
+        /// Construct a state machine with external state storage.
+        /// </summary>
+        /// <param name="stateAccessor">A function that will be called to read the current state value.</param>
+        /// <param name="stateMutator">An action that will be called to write new state values.</param>
+        /// <param name="stateComparer"></param>
+        /// <param name="triggerComparer"></param>
+        public StateMachine(Func<TState> stateAccessor, Action<TState> stateMutator)
         {
             _stateAccessor = Enforce.ArgumentNotNull(stateAccessor, "stateAccessor");
             _stateMutator = Enforce.ArgumentNotNull(stateMutator, "stateMutator");
@@ -43,7 +45,7 @@ namespace Stateless
         /// Construct a state machine.
         /// </summary>
         /// <param name="initialState">The initial state.</param>
-		public StateMachine(TState initialState)
+        public StateMachine(TState initialState)
         {
             var reference = new StateReference { State = initialState };
             _stateAccessor = () => reference.State;
@@ -196,14 +198,15 @@ namespace Stateless
             TState destination;
             if (triggerBehaviour.ResultsInTransitionFrom(source, args, out destination))
             {
+
                 var transition = new Transition(source, destination, trigger);
 
                 CurrentRepresentation.Exit(transition);
                 State = transition.Destination;
                 CurrentRepresentation.Enter(transition, args);
-                var onTransitioned = _onTransitioned;
-                if (onTransitioned != null)
-                    onTransitioned(transition);
+
+                InvokeOnTransitioned(transition);
+
             }
         }
 
@@ -301,16 +304,30 @@ namespace Stateless
         {
             if (_triggerConfiguration.ContainsKey(trigger.Trigger))
                 throw new InvalidOperationException(
-					string.Format("Parameters for the trigger '{0}' have already been configured.", trigger));
+                    string.Format("Parameters for the trigger '{0}' have already been configured.", trigger));
 
             _triggerConfiguration.Add(trigger.Trigger, trigger);
+        }
+
+        void InvokeOnTransitioned(Transition t)
+        {
+
+            if (_onTransitioned == null) {
+                return;
+            }
+
+            // No need to make a copy, it is not possible to remove a listener from this list
+            for (var i = 0; i < _onTransitioned.Count; i++) {
+                _onTransitioned[i](t);
+            }
+
         }
 
         static void DefaultUnhandledTriggerAction(TState state, TTrigger trigger)
         {
             throw new InvalidOperationException(
                 string.Format(
-					"No valid leaving transitions are permitted from state '{1}' for trigger '{0}'. Consider ignoring the trigger.",
+                    "No valid leaving transitions are permitted from state '{1}' for trigger '{0}'. Consider ignoring the trigger.",
                     trigger, state));
         }
 
@@ -323,7 +340,9 @@ namespace Stateless
         public void OnTransitioned(Action<Transition> onTransitionAction)
         {
             if (onTransitionAction == null) throw new ArgumentNullException("onTransitionAction");
-            _onTransitioned += onTransitionAction;
+
+            if(_onTransitioned == null) _onTransitioned = new List<Action<Transition>>(1);
+            _onTransitioned.Add(onTransitionAction);
         }
     }
 }
