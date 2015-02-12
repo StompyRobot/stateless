@@ -47,29 +47,17 @@
     <Compile Include="..\Stateless\ParameterConversion.cs">
       <Link>ParameterConversion.cs</Link>
     </Compile>
-    <Compile Include="..\Stateless\ParameterConversionResources.Designer.cs">
-      <Link>ParameterConversionResources.Designer.cs</Link>
-    </Compile>
     <Compile Include="..\Stateless\StateConfiguration.cs">
       <Link>StateConfiguration.cs</Link>
     </Compile>
-    <Compile Include="..\Stateless\StateConfigurationResources.Designer.cs">
-      <Link>StateConfigurationResources.Designer.cs</Link>
-    </Compile>
     <Compile Include="..\Stateless\StateMachine.cs">
       <Link>StateMachine.cs</Link>
-    </Compile>
-    <Compile Include="..\Stateless\StateMachineResources.Designer.cs">
-      <Link>StateMachineResources.Designer.cs</Link>
     </Compile>
     <Compile Include="..\Stateless\StateReference.cs">
       <Link>StateReference.cs</Link>
     </Compile>
     <Compile Include="..\Stateless\StateRepresentation.cs">
       <Link>StateRepresentation.cs</Link>
-    </Compile>
-    <Compile Include="..\Stateless\StateRepresentationResources.Designer.cs">
-      <Link>StateRepresentationResources.Designer.cs</Link>
     </Compile>
     <Compile Include="..\Stateless\Transition.cs">
       <Link>Transition.cs</Link>
@@ -84,20 +72,6 @@
       <Link>TriggerWithParameters.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="..\Stateless\ParameterConversionResources.resx">
-      <Link>ParameterConversionResources.resx</Link>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\Stateless\StateConfigurationResources.resx">
-      <Link>StateConfigurationResources.resx</Link>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\Stateless\StateMachineResources.resx">
-      <Link>StateMachineResources.resx</Link>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\Stateless\StateRepresentationResources.resx">
-      <Link>StateRepresentationResources.resx</Link>
-    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

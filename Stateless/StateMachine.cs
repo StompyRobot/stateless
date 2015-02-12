@@ -33,8 +33,6 @@ namespace Stateless
         /// </summary>
         /// <param name="stateAccessor">A function that will be called to read the current state value.</param>
         /// <param name="stateMutator">An action that will be called to write new state values.</param>
-        /// <param name="stateComparer"></param>
-        /// <param name="triggerComparer"></param>
         public StateMachine(Func<TState> stateAccessor, Action<TState> stateMutator)
         {
             _stateAccessor = Enforce.ArgumentNotNull(stateAccessor, "stateAccessor");
